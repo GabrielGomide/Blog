@@ -1,0 +1,17 @@
+{% extends 'core/index.html' %}
+
+{% block title %}
+Write post
+{% endblock %}
+
+{% block main %}
+    <h1>Write post</h1> 
+
+    <form action='' method='POST'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type='submit' value='SUBMIT POST'>
+    </form>
+{% endblock %}
+
+

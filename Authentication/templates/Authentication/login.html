@@ -1,0 +1,22 @@
+{% extends 'core/index.html' %}
+
+{% block title %}
+Log In!
+{% endblock %}
+
+{% block main %}
+    <h1>Log In!</h1>
+
+    {% if error %}
+        <p>Incorrect username or password</p>
+    {% endif %}
+
+    <form action='' method='POST'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type='submit' value='Create Account'>
+    </form>
+
+    <a href='../signup'>Don't have an account? Sign Up!</a>
+{% endblock %}
+

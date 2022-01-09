@@ -1,0 +1,36 @@
+{% extends 'core/index.html' %}
+
+{% block title %}
+Sign Up!
+{% endblock %}
+
+{% block main %}
+    <h1>Main posts</h1>
+
+    {% if user %}
+        {% if user.can_post %}
+            <a href='write_post'>Write post</a>
+        {% endif %}
+    {% else %}
+        <a href='signup'>Signup to comment on posts</a>
+    {% endif %}
+
+    <hr>
+
+    {% if posts|length %}
+        {% for post in posts %} 
+            <p>Written by {{post.author.username}} in {{post.datetime}}</p>
+            <h1>{{post.title}}</h1>
+            <p>{{post.content}}</p>
+
+            {% if post.author == user %}
+                <a href='edit/{{post.id}}'>Edit Post</a>
+            {% endif %}
+
+            <hr>
+        {% endfor %}
+    {% else %} 
+        <p>There are no posts</p>
+    {% endif %} 
+{% endblock %}
+
