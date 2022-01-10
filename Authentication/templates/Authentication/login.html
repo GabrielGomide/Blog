@@ -1,22 +1,30 @@
 {% extends 'core/index.html' %}
+{% load static %}
 
 {% block title %}
 Log In!
 {% endblock %}
 
+{% block import %}
+    <link rel='stylesheet' href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+
 {% block main %}
-    <h1>Log In!</h1>
+    <div id='main'>
+        <h1>Log in to Gabriel's Blog</h1>
 
-    {% if error %}
-        <p>Incorrect username or password</p>
-    {% endif %}
+        {% if error %}
+            <p>Incorrect username or password</p>
+        {% endif %}
 
-    <form action='' method='POST'>
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type='submit' value='Create Account'>
-    </form>
+        <form action='' method='POST'>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type='submit' value='Create Account'>
+        </form>
 
-    <a href='../signup'>Don't have an account? Sign Up!</a>
+        <a href='../signup'>Don't have an account? Sign Up!</a>
+    </div>
 {% endblock %}
 

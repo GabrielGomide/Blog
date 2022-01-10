@@ -36,7 +36,9 @@ def write_post(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
-            post = Post(title=title, content=content, author=user)
+            public = form.cleaned_data['public']
+
+            post = Post(title=title, content=content, author=user, public=public)
             post.save()
             return redirect('main')
     else:
