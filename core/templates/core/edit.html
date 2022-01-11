@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Write post
+Edit post
 {% endblock %}
 
 {% block import %} 
@@ -10,13 +10,13 @@ Write post
 {% endblock %}
 
 {% block main %}
-    <h1>Write post</h1> 
+    <h1>Edit post</h1> 
 
     <div id='main'>
         <form action='' method='POST'>
             {% csrf_token %}
             {{form.as_p}}
-            <input type='submit' value='SUBMIT POST'>
+            <input type='submit' value='EDIT POST'>
         </form>
     </div>
 {% endblock %}

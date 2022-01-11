@@ -25,3 +25,13 @@ a {
     margin-bottom: 2%;
 }
 
+#links {
+    margin-top: 2%;
+    text-align: right;
+}
+
+#links a {
+    margin-left: .5%;
+    margin-right: .5%;
+}
+

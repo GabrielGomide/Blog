@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Sign Up!
+Main posts
 {% endblock %}
 
 {% block import %}
@@ -34,11 +34,19 @@ Sign Up!
                         {% endif %}
 
                         <h1>{{post.title}}</h1>
-                        <p>{{post.content}}</p>
+                        
+                        {% for line in post.break_content %}
+                            {{line}}
+                            <br>
+                        {% endfor %}
 
-                        {% if post.author == user %}
-                            <a href='edit/{{post.id}}'>Edit Post</a>
-                        {% endif %}
+                        <div id='links'>
+                            {% if post.author == user %}
+                                <a href='edit/{{post.id}}'>Edit Post</a>
+                            {% endif %}
+                            
+                            <a href='post/{{post.id}}'>See post</a>
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}

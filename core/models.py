@@ -14,6 +14,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def break_content(self):
+        return self.content.split('\n')
+
 
 class Comment(models.Model):
     author = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -22,5 +25,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+
+    def break_content(self):
+        return self.content.split('\n')
 
 
