@@ -84,7 +84,51 @@ def edit_post(request, id):
     form['content'].initial = post.content
     form['public'].initial = post.public
 
-    context = {'form': form}
+    context = {'form': form, 'post': post}
 
     return render(request, 'core/edit.html', context)
+
+def delete(request, id):
+    user = None
+
+    if request.COOKIES.get('username'):
+        username = request.COOKIES.get('username')
+        if Account.objects.filter(username=username).exists():
+            user = Account.objects.get(username=username)
+
+    if not user or not user.can_post:
+        return redirect('main')
+
+    if not(Post.objects.filter(id=id).exists() and user == Post.objects.get(id=id).author):
+        return redirect('main')
+
+    post = Post.objects.get(id=id)
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('main')
+
+    context = {'post': post}
+
+    return render(request, 'core/delete.html', context)
+
+def post(request, id):
+    user = None
+
+    if request.COOKIES.get('username'):
+        username = request.COOKIES.get('username')
+        if Account.objects.filter(username=username).exists():
+            user = Account.objects.get(username=username)
+
+    if not user or not user.can_post:
+        return redirect('main')
+
+    if not(Post.objects.filter(id=id).exists() and user == Post.objects.get(id=id).author):
+        return redirect('main')
+
+    post = Post.objects.get(id=id)
+
+    context = {'post': post}
+
+    return render(request, 'core/post.html', context)
 

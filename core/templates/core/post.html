@@ -1,0 +1,40 @@
+{% extends 'core/index.html' %}
+{% load static %}
+
+{% block title %}
+{{post.title}}
+{% endblock %}
+
+{% block import %} 
+    <link rel='stylesheet' href="{% static 'css/post.css' %}">
+{% endblock %}
+
+{% block main %}
+    <a href='..'>Back</a>
+
+    <div id='post'>
+        <p>Written by {{post.author.username}} in {{post.datetime}}</p>
+
+        {% if not post.public %}
+            <p>This post is private</p>
+        {% endif %}
+
+        <h1>{{post.title}}</h1>
+
+        <div id='content'>
+            {% for line in post.break_content %}
+                {% if line.0 == '#' %}
+                    <b>{{line|slice:'1:'}}</b>
+                {% elif line.0 == '$' %}
+                    <i>{{line|slice:'1:'}}</i>
+                {% elif line.0 == '%' %}
+                    <u>{{line|slice:'1:'}}</u>
+                {% else %}
+                    {{line}}
+                {% endif %}
+                <br>
+            {% endfor %}
+        </div>  
+    </div>
+{% endblock %}
+

@@ -34,9 +34,17 @@ Main posts
                         {% endif %}
 
                         <h1>{{post.title}}</h1>
-                        
+
                         {% for line in post.break_content %}
-                            {{line}}
+                            {% if line.0 == '#' %}
+                                <b>{{line|slice:'1:'}}</b>
+                            {% elif line.0 == '$' %}
+                                <i>{{line|slice:'1:'}}</i>
+                            {% elif line.0 == '%' %}
+                                <u>{{line|slice:'1:'}}</u>
+                            {% else %}
+                                {{line}}
+                            {% endif %}
                             <br>
                         {% endfor %}
 
