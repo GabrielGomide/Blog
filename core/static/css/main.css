@@ -12,6 +12,12 @@ html {
     transform: translate(-50%, 0%);
 }
 
+#content {
+    background-color: #e3e3e3;
+    width: 100%%;
+    padding: 2%;
+}
+
 a {
     font-weight: bold;
     color: green;

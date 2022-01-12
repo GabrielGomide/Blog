@@ -113,17 +113,7 @@ def delete(request, id):
     return render(request, 'core/delete.html', context)
 
 def post(request, id):
-    user = None
-
-    if request.COOKIES.get('username'):
-        username = request.COOKIES.get('username')
-        if Account.objects.filter(username=username).exists():
-            user = Account.objects.get(username=username)
-
-    if not user or not user.can_post:
-        return redirect('main')
-
-    if not(Post.objects.filter(id=id).exists() and user == Post.objects.get(id=id).author):
+    if not Post.objects.filter(id=id).exists():
         return redirect('main')
 
     post = Post.objects.get(id=id)

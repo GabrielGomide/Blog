@@ -8,8 +8,6 @@ class Post(models.Model):
     content = models.TextField()
     public = models.BooleanField(default=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
