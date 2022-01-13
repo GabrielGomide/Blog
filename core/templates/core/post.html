@@ -11,7 +11,7 @@
 
 {% block main %}
     <a href='..'>Back</a>
-
+    
     <div id='post'>
         <p>Written by {{post.author.username}} in {{post.datetime}}</p>
 
@@ -34,7 +34,35 @@
                 {% endif %}
                 <br>
             {% endfor %}
-        </div>  
+        </div> 
+        
+        <div id='links'>
+            {% if post.author == user %}
+                <a href='../../edit/{{post.id}}'>Edit Post</a>
+            {% endif %}
+        </div>
+
+        <div id='comments'>
+            <h2>Comments</h2>
+
+            {% if user %}
+                <form action='' method='POST'>
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type='submit' value='COMMENT'>
+                </form>
+            {% endif %}
+
+            {% for comment in post.comment_set.all %}
+                <div id='content'>
+                    <p>{{comment.datetime}} - <b>{{comment.author}}</b>: {{comment.content}}</p>
+                </div>
+            {% endfor %}
+
+            {% if amt_comments == 0 %}
+                <p>There are no comments</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 

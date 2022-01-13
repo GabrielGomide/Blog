@@ -113,12 +113,33 @@ def delete(request, id):
     return render(request, 'core/delete.html', context)
 
 def post(request, id):
+    user = None
+
+    if request.COOKIES.get('username'):
+        username = request.COOKIES.get('username')
+        if Account.objects.filter(username=username).exists():
+            user = Account.objects.get(username=username)
+
     if not Post.objects.filter(id=id).exists():
         return redirect('main')
 
     post = Post.objects.get(id=id)
 
-    context = {'post': post}
+    if not post.public and not post.author == user:
+        return redirect('main')
+
+    if request.method == 'POST':
+        form = CreateComment(request.POST)
+
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            comment = Comment(author=user, post=post, content=content)
+            comment.save()
+            return redirect(f'../post/{id}')
+
+    form = CreateComment()
+
+    context = {'post': post, 'user': user, 'form': form, 'amt_comments': len(post.comment_set.all())}
 
     return render(request, 'core/post.html', context)
 

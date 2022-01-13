@@ -5,3 +5,6 @@ class CreatePost(forms.Form):
     content = forms.CharField(widget=forms.Textarea({'placeholder': 'Content'}), label='')
     public = forms.BooleanField(initial=True, required=False)
 
+class CreateComment(forms.Form):
+    content = forms.CharField(widget=forms.Textarea({'placeholder': 'Comment'}), label='')
+
