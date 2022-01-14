@@ -1,6 +1,7 @@
 from django.db import models
 from Authentication.models import *
 
+
 # Create your models here.
 class Post(models.Model):
     author = models.ForeignKey(Account, on_delete=models.CASCADE)

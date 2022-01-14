@@ -13,7 +13,24 @@
     <a href='..'>Back</a>
     
     <div id='post'>
-        <p>Written by {{post.author.username}} in {{post.datetime}}</p>
+        <p class='written_by'></p>
+
+        <script>
+            var written_by_array = document.getElementsByClassName('written_by');
+            var written_by = written_by_array[written_by_array.length - 1];
+            var year = "{{post.datetime.year}}";
+            var month = "{{post.datetime.month}}";
+            var day = "{{post.datetime.day}}";
+            var hour = "{{post.datetime.hour}}";
+            var minutes = "{{post.datetime.minute}}";
+            var seconds = "{{post.datetime.second}}";
+                            
+            var date = new Date(Date.UTC(year, month - 1, day, hour, minutes, seconds));
+            var local_date = date.toDateString();
+            var local_time = date.toLocaleTimeString();
+                            
+            written_by.textContent = `Written by {{post.author}} in ${local_date}, ${local_time}`;  
+        </script>
 
         {% if not post.public %}
             <p>This post is private</p>
@@ -55,7 +72,28 @@
 
             {% for comment in post.comment_set.all %}
                 <div id='content'>
-                    <p>{{comment.datetime}} - <b>{{comment.author}}</b>: {{comment.content}}</p>
+                    <p class='comment'></p>
+
+                    <script>
+                        var comments_array = document.getElementsByClassName('comment');
+                        var comment = comments_array[comments_array.length - 1];
+                        var year = "{{comment.datetime.year}}";
+                        var month = "{{comment.datetime.month}}";
+                        var day = "{{comment.datetime.day}}";
+                        var hour = "{{comment.datetime.hour}}";
+                        var minutes = "{{comment.datetime.minute}}";
+                        var seconds = "{{comment.datetime.second}}";
+                                        
+                        var date = new Date(Date.UTC(year, month - 1, day, hour, minutes, seconds));
+                        var local_date = date.toDateString();
+                        var local_time = date.toLocaleTimeString();
+                                        
+                        comment.innerHTML = `${local_date}, ${local_time} - <b>{{comment.author}}</b>: {{comment.content}}`;  
+                    </script>
+
+                    {% if user.can_post or comment.author == user %}
+                        <a href='../delete_comment/{{comment.id}}' id='delete_comment'>Delete</a>
+                    {% endif %}
                 </div>
             {% endfor %}
 

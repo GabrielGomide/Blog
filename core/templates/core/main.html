@@ -27,7 +27,24 @@ Main posts
             {% for post in posts %} 
                 {% if post.public or post.author == user %}
                     <div id='post'>
-                        <p>Written by {{post.author.username}} in {{post.datetime}}</p>
+                        <p class='written_by'></p>
+
+                        <script>
+                            var written_by_array = document.getElementsByClassName('written_by');
+                            var written_by = written_by_array[written_by_array.length - 1];
+                            var year = "{{post.datetime.year}}";
+                            var month = "{{post.datetime.month}}";
+                            var day = "{{post.datetime.day}}";
+                            var hour = "{{post.datetime.hour}}";
+                            var minutes = "{{post.datetime.minute}}";
+                            var seconds = "{{post.datetime.second}}";
+                            
+                            var date = new Date(Date.UTC(year, month - 1, day, hour, minutes, seconds));
+                            var local_date = date.toDateString();
+                            var local_time = date.toLocaleTimeString();
+                            
+                            written_by.textContent = `Written by {{post.author}} in ${local_date}, ${local_time}`;  
+                        </script>
 
                         {% if not post.public %}
                             <p>This post is private</p>

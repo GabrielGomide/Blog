@@ -12,8 +12,7 @@ def main(request):
         username = request.COOKIES.get('username')
         if Account.objects.filter(username=username).exists():
             user = Account.objects.get(username=username)
-
-
+            
     context = {'posts': list(reversed(Post.objects.all())), 'user': user}
 
     return render(request, 'core/main.html', context)
@@ -108,7 +107,7 @@ def delete(request, id):
         post.delete()
         return redirect('main')
 
-    context = {'post': post}
+    context = {'text': 'post'}
 
     return render(request, 'core/delete.html', context)
 
@@ -143,3 +142,28 @@ def post(request, id):
 
     return render(request, 'core/post.html', context)
 
+
+def delete_comment(request, id):
+    user = None
+
+    if request.COOKIES.get('username'):
+        username = request.COOKIES.get('username')
+        if Account.objects.filter(username=username).exists():
+            user = Account.objects.get(username=username)
+
+    if not user:
+        return redirect('main')
+
+    if not(Comment.objects.filter(id=id).exists() and (user == Comment.objects.get(id=id).author or user.can_post)):
+        return redirect('main')
+
+    comment = Comment.objects.get(id=id)
+    post = comment.post
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect(f'../post/{post.id}')
+
+    context = {'text': 'comment'}
+
+    return render(request, 'core/delete.html', context)

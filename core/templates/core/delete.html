@@ -10,10 +10,10 @@ Delete post
 {% endblock %}
 
 {% block main %}
-    <a href='../edit/{{post.id}}'>Back</a>
+    <a href='javascript:history.back()'>Back</a>
 
     <div id='main'>
-        <h1>Are you sure you want to delete this post?</h1>
+        <h1>Are you sure you want to delete this {{text}}?</h1>
         <form action='' method='POST'>
             {% csrf_token %}
             <input type='submit' value='DELETE POST'>

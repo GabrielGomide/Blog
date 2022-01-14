@@ -15,6 +15,7 @@ html {
 #content {
     background-color: #e3e3e3;
     padding: 2%;
+    margin-bottom: 2%;
 }
 
 a {
@@ -51,8 +52,4 @@ input[type='submit'] {
     padding: 1%;
 }
 
-#content {
-    margin-bottom: 2%;
-    padding: 1%;
-}
 
